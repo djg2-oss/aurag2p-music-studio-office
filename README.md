@@ -1,2 +1,4 @@
-# aurag2p-music-studio-office
-AuraG2P Music Studio + G2PTechOffice: Complex web app for music studio + full office desktop operations (file mgmt, cleanup, deployments, AI builds, optimization)
+# AuraG2P Music Studio + G2P Tech Office
+Executive desk for complex studio and company operations.
+Open index.html. Canonical note: GROK_WORKSPACE_NOTE.md.
+Owner: djg2-oss. Updated 2026-10-05.
