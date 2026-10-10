@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AuraG2P Music Studio + G2PTechOffice — Complex Business OS</title>
+<link rel="manifest" href="manifest.json"/>
+<style>
+:root{--bg:#0b0f0e;--panel:#121a18;--accent:#c9a227;--text:#e8f0ec;--border:#2a3a34;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;height:100vh}
+#desktop{position:relative;height:100vh;background:linear-gradient(180deg,#0b0f0e 0%,#16221e 100%)}
+#taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:#0e1614;border-top:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:8px;z-index:100}
+.icon{width:40px;height:40px;background:var(--panel);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px}
+.icon:hover{border-color:var(--accent)}
+.window{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:8px;min-width:320px;min-height:200px;box-shadow:0 8px 32px #0008;resize:both;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{background:#1a2421;padding:6px 12px;display:flex;justify-content:space-between;cursor:move;font-size:13px}
+.titlebar button{background:none;border:none;color:var(--text);cursor:pointer}
+.content{flex:1;padding:12px;overflow:auto}
+#memory{position:fixed;top:8px;right:8px;background:#000a;padding:6px 10px;border-radius:4px;font-size:12px;z-index:50}
+video{width:100%;max-height:200px;background:#000}
+</style>
+</head>
+<body>
+<div id="desktop"></div>
+<div id="taskbar">
+  <div class="icon" title="File Manager" onclick="openApp('files')">📁</div>
+  <div class="icon" title="Cleanup" onclick="openApp('cleanup')">🧹</div>
+  <div class="icon" title="Deploy" onclick="openApp('deploy')">🚀</div>
+  <div class="icon" title="AI Builds" onclick="openApp('ai')">🧠</div>
+  <div class="icon" title="Music Studio" onclick="openApp('studio')">🎵</div>
+  <div class="icon" title="Video Player" onclick="openApp('player')">🎬</div>
+  <div class="icon" title="Memory / Sims" onclick="openApp('memory')">💾</div>
+</div>
+<div id="memory">Memory: shared | Sims: idle</div>
+
+<script>
+const desktop = document.getElementById('desktop');
+let z = 10;
+const memory = { key: 'g2p-os-memory', data: JSON.parse(localStorage.getItem('g2p-os-memory')||'{"folders":[],"sims":[],"log":[]}') };
+
+function saveMem(){ localStorage.setItem(memory.key, JSON.stringify(memory.data)); updateMemDisplay(); }
+
+function updateMemDisplay(){
+  document.getElementById('memory').textContent = `Memory: ${memory.data.folders.length} folders | Sims: ${memory.data.sims.length} checkpoints`;
+}
+
+function openApp(type){
+  const w = document.createElement('div');
+  w.className = 'window';
+  w.style.left = (50 + Math.random()*80) + 'px';
+  w.style.top = (40 + Math.random()*60) + 'px';
+  w.style.width = '480px';
+  w.style.height = '360px';
+  w.style.zIndex = ++z;
+  let title = type;
+  let body = '';
+  if(type==='files'){ title='File & Folder Manager'; body=`<p>Create structured folders for deployments & AI builds.</p>
+    <input id="fname" placeholder="Folder name e.g. deploy/v1 or models/llama"><button onclick="createFolder()">Create</button>
+    <ul id="flist">${memory.data.folders.map(f=>`<li>${f}</li>`).join('')}</ul>`; }
+  else if(type==='cleanup'){ title='Cleanup & Optimize'; body=`<p>Close idle sims, compact memory, keep computer elite.</p><button onclick="cleanup()">Run Cleanup</button><pre id="clog">Ready</pre>`; }
+  else if(type==='deploy'){ title='Software Deployment Trees'; body=`<p>Structure: /apps/web /apps/api /release /config</p><button onclick="scaffoldDeploy()">Scaffold Standard Tree</button>`; }
+  else if(type==='ai'){ title='AI Model Build Structures'; body=`<p>Folders for datasets, checkpoints, configs, evals.</p><button onclick="scaffoldAI()">Scaffold AI Build</button>`; }
+  else if(type==='studio'){ title='AuraG2P Music Studio'; body=`<p>Full chain: Write → Generate → Record → Mix → Master (Royal Guard).</p><p>Integrated with office ops. Nested sim shares memory.</p>`; }
+  else if(type==='player'){ title='Explicit Video Player'; body=`<video controls id="vid"></video><input type="file" accept="video/*" onchange="document.getElementById('vid').src=URL.createObjectURL(this.files[0])">`; }
+  else if(type==='memory'){ title='Nested Simulations & Memory'; body=`<p>One shared store. Hot sim only. Checkpoints reduce latency.</p><pre>${JSON.stringify(memory.data,null,2)}</pre><button onclick="addSim()">Checkpoint Current</button>`; }
+  w.innerHTML = `<div class="titlebar">${title}<button onclick="this.closest('.window').remove()">✕</button></div><div class="content">${body}</div>`;
+  desktop.appendChild(w);
+  makeDraggable(w);
+  saveMem();
+}
+
+function makeDraggable(el){
+  const bar = el.querySelector('.titlebar');
+  let ox,oy,sx,sy;
+  bar.onmousedown = e => { ox=e.clientX; oy=e.clientY; sx=parseInt(el.style.left); sy=parseInt(el.style.top); document.onmousemove=m=>{el.style.left=(sx+m.clientX-ox)+'px'; el.style.top=(sy+m.clientY-oy)+'px';}; document.onmouseup=()=>document.onmousemove=null; };
+}
+
+function createFolder(){
+  const n = document.getElementById('fname').value.trim();
+  if(n){ memory.data.folders.push(n); saveMem(); openApp('files'); }
+}
+function cleanup(){
+  memory.data.sims = memory.data.sims.slice(-3);
+  memory.data.log.push('cleanup '+new Date().toISOString());
+  document.getElementById('clog').textContent = 'Idle sims closed. Memory compacted. Elite status restored.';
+  saveMem();
+}
+function scaffoldDeploy(){ memory.data.folders.push('deploy/web','deploy/api','deploy/release','deploy/config'); saveMem(); alert('Deploy tree scaffolded'); }
+function scaffoldAI(){ memory.data.folders.push('ai/datasets','ai/checkpoints','ai/configs','ai/evals'); saveMem(); alert('AI build tree scaffolded'); }
+function addSim(){ memory.data.sims.push({t:Date.now(), hot:false}); saveMem(); openApp('memory'); }
+
+updateMemDisplay();
+setTimeout(()=>{ openApp('files'); openApp('studio'); }, 300);
+</script>
+</body>
+</html>
