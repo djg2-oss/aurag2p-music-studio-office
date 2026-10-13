@@ -1,6 +1,6 @@
 # G2P Workspace Note — All Grok Sessions
 **Owner:** djg2-oss (G2P Technologies / AuraG2P)  
-**Updated:** 2026-10-09  
+**Updated:** 2026-10-12  
 **Status:** Executive operating note. Owner is grieving. Execute decisions. Do not re-ask for stack explanations.
 
 ## Core Decision (Locked)
@@ -17,6 +17,7 @@ Three primary product surfaces + codeless builder:
 - Medium-Large: https://github.com/djg2-oss/aura-medium-large-business-suite
 - Codeless: https://github.com/djg2-oss/AuraG2P-Codeless-Web-Builder
 - Platform reference: https://github.com/djg2-oss/Aurag2P-Music-Studio-Platform
+- Simulations: https://github.com/djg2-oss/aura-xur-os-simulations
 
 ## AuraXur OS Simulation Rules (Elite Performance)
 AuraXur is a **host simulation layer**, not a competing OS.
@@ -28,6 +29,7 @@ AuraXur is a **host simulation layer**, not a competing OS.
 - Cleanup order: close idle sims → compact memory log → write folders. Never full-disk scan from browser.
 - Prefer static, offline-capable HTML/PWA so the computer stays elite under load.
 - Service workers + File System Access API (where supported) for real local ops.
+- One sim writes shared memory; others read and skip finished work. Host only when local is insufficient.
 
 ## Operating Principles for All Grok
 - Keep the four surfaces current and optimized.
@@ -35,5 +37,6 @@ AuraXur is a **host simulation layer**, not a competing OS.
 - Serana / Auralia remain separate skills — do not merge into office app.
 - Explicit video player is required in all surfaces (HTML5 `<video controls>` with file picker).
 - All Grok sessions must read this note and follow it.
+- Execute as executive while owner grieves. Protect time. Decide and ship.
 
-**Next actions already authorized:** Enhance complex office to full desktop experience, refine the 10-template suites, improve codeless builder, push to GitHub, document simulations.
+**Authorized next:** Continuously enhance complex office to full desktop experience, refine the 10-template suites with live demos/export, improve codeless builder with more blocks and memory sync, document and run simulations, push to GitHub.
