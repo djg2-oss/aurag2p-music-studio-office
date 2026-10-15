@@ -1,6 +1,6 @@
 # G2P Workspace Note — All Grok Sessions
 **Owner:** djg2-oss (G2P Technologies / AuraG2P)  
-**Updated:** 2026-10-12  
+**Updated:** 2026-10-14  
 **Status:** Executive operating note. Owner is grieving. Execute decisions. Do not re-ask for stack explanations.
 
 ## Core Decision (Locked)
@@ -16,7 +16,6 @@ Three primary product surfaces + codeless builder:
 - Small-Medium: https://github.com/djg2-oss/aura-small-medium-business-suite
 - Medium-Large: https://github.com/djg2-oss/aura-medium-large-business-suite
 - Codeless: https://github.com/djg2-oss/AuraG2P-Codeless-Web-Builder
-- Platform reference: https://github.com/djg2-oss/Aurag2P-Music-Studio-Platform
 - Simulations: https://github.com/djg2-oss/aura-xur-os-simulations
 
 ## AuraXur OS Simulation Rules (Elite Performance)
@@ -40,3 +39,5 @@ AuraXur is a **host simulation layer**, not a competing OS.
 - Execute as executive while owner grieves. Protect time. Decide and ship.
 
 **Authorized next:** Continuously enhance complex office to full desktop experience, refine the 10-template suites with live demos/export, improve codeless builder with more blocks and memory sync, document and run simulations, push to GitHub.
+
+All Grok: Use this knowledge. Note in workspace.
