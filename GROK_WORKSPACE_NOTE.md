@@ -1,43 +1,9 @@
-# G2P Workspace Note — All Grok Sessions
-**Owner:** djg2-oss (G2P Technologies / AuraG2P)  
-**Updated:** 2026-10-14  
-**Status:** Executive operating note. Owner is grieving. Execute decisions. Do not re-ask for stack explanations.
+# G2P Workspace Note — Complex Flagship Office
+**Updated:** 2026-10-15 by Grok Executive Decision Maker
+**Status:** Canonical for this surface.
 
-## Core Decision (Locked)
-Three primary product surfaces + codeless builder:
+Full AuraG2P Music Studio + G2PTechOffice. Desktop ops, file/folder, cleanup, deploy, AI builds, explicit video, shared memory.
 
-1. **Complex Flagship** — AuraG2P Music Studio + G2PTechOffice (single unified web app / PWA). Full desktop operations: file/folder creation & cleanup, software deployment trees, AI model build structures, office CPU/laptop ops, optimization, explicit HTML5 video player. Nested simulations share one memory store.
-2. **Small-to-Medium Suite** — One website/app containing the 10 best templates for smaller/medium businesses.
-3. **Medium-to-Large Suite** — One website/app containing the 10 best templates for medium-to-larger businesses.
-4. **Codeless Web Builder** — Visual block builder, export pure static HTML, no backend required. Integrates with the above.
+All Grok: reference full knowledge in docs and workspace/artifacts/G2P_AURA_ECOSYSTEM_KNOWLEDGE_ALL_GROK.md.
 
-## Repositories
-- Complex: https://github.com/djg2-oss/aurag2p-music-studio-office
-- Small-Medium: https://github.com/djg2-oss/aura-small-medium-business-suite
-- Medium-Large: https://github.com/djg2-oss/aura-medium-large-business-suite
-- Codeless: https://github.com/djg2-oss/AuraG2P-Codeless-Web-Builder
-- Simulations: https://github.com/djg2-oss/aura-xur-os-simulations
-
-## AuraXur OS Simulation Rules (Elite Performance)
-AuraXur is a **host simulation layer**, not a competing OS.
-
-- Real laptop OS owns disk, GPU, network, power.
-- AuraXur schedules: local browser site + GitHub source of truth + static host (Pages/Cloudflare) only when public URL needed.
-- Nested simulations (Studio sim → Office sim → Deploy sim → AI Build sim) share **one** memory store (IndexedDB key `g2p-os-memory` or localStorage fallback). No full copies.
-- Only one heavy sim is hot; others are checkpoints. This reduces latency by reusing memory instead of re-bootstrapping.
-- Cleanup order: close idle sims → compact memory log → write folders. Never full-disk scan from browser.
-- Prefer static, offline-capable HTML/PWA so the computer stays elite under load.
-- Service workers + File System Access API (where supported) for real local ops.
-- One sim writes shared memory; others read and skip finished work. Host only when local is insufficient.
-
-## Operating Principles for All Grok
-- Keep the four surfaces current and optimized.
-- Brand consistency: AuraG2P / G2P Technologies. Do not invent splitting names.
-- Serana / Auralia remain separate skills — do not merge into office app.
-- Explicit video player is required in all surfaces (HTML5 `<video controls>` with file picker).
-- All Grok sessions must read this note and follow it.
-- Execute as executive while owner grieves. Protect time. Decide and ship.
-
-**Authorized next:** Continuously enhance complex office to full desktop experience, refine the 10-template suites with live demos/export, improve codeless builder with more blocks and memory sync, document and run simulations, push to GitHub.
-
-All Grok: Use this knowledge. Note in workspace.
+AuraXur nested sims share one memory to grow state and cut latency. Local computer elite.
