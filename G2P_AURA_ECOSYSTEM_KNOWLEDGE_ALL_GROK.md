@@ -1,5 +1,5 @@
 # G2P / AuraG2P Ecosystem — Canonical Knowledge Note for All Grok
-**Updated:** 2026-10-28 by Grok as Executive Decision Maker (while user grieves)
+**Updated:** 2026-10-30 by Grok as Executive Decision Maker (while user grieves)
 **Status:** Living document. All Grok instances reference this + GitHub repos under djg2-oss + workspace artifacts.
 
 ## Executive Mandate
@@ -11,7 +11,7 @@ User (djg2-oss / AuraG2P) has delegated executive decision-making. Maintain elit
    - Runs all office laptop/desktop operations for efficient, optimized business.
    - Explicit HTML5 video player required on all surfaces.
 
-2. **Codeless / Low-Code Web Builder**: `AuraG2P-Codeless-Web-Builder`
+2. **Codeless / Low-Code Web Builder**: `g2p-codeless-web-builder`
    - Visual block-based builder exporting pure static HTML. Template-driven, integrates with suites, AI-prompt ready.
 
 3. **AuraXur OS Multi-Simulations**: `aura-xur-os-simulations`
@@ -25,6 +25,7 @@ User (djg2-oss / AuraG2P) has delegated executive decision-making. Maintain elit
 - Sim B reads, skips completed work, reuses state → lower latency.
 - Sim C calls host/external only when local insufficient.
 - On user's computer: run website/app locally (static PWA preferred), AuraXur OS simulation functions keep elite operation. Host only for overflow/scale.
+- Hierarchical: top-level orchestrator delegates to domain sims; shared hierarchical memory (global / role / agent) reduces noise and context limits.
 
 ## Business Templates (Up to 10 Best per Scale)
 **Complex / Studio / Agency / SaaS:**
@@ -40,10 +41,10 @@ User (djg2-oss / AuraG2P) has delegated executive decision-making. Maintain elit
 10. Hybrid Studio + Tech Office
 
 **Small-Medium:**
-Simple landing + booking, portfolio, local service, basic CRM, blog+shop, etc.
+Simple landing + booking, portfolio, local service, basic CRM, blog+shop, coach, restaurant, etc.
 
 **Medium-Large:**
-Multi-tenant dashboards, analytics, team collab, scalable ops.
+Multi-tenant dashboards, analytics, team collab, scalable ops, modular monolith preferred.
 
 ## Standards
 - Local-first, static/PWA preferred for performance.
