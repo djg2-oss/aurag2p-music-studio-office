@@ -3,25 +3,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AuraG2P Music Studio + G2PTechOffice — Complex Business OS</title>
+<title>AuraG2P Music Studio + G2PTechOffice — Elite Complex Business OS</title>
 <link rel="manifest" href="manifest.json"/>
 <style>
-:root{--bg:#0b0f0e;--panel:#121a18;--accent:#c9a227;--text:#e8f0ec;--border:#2a3a34;}
+:root{--bg:#0b0f0e;--panel:#121a18;--accent:#c9a227;--text:#e8f0ec;--border:#2a3a34;--hover:#1a2824;}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;height:100vh}
 #desktop{position:relative;height:100vh;background:linear-gradient(180deg,#0b0f0e 0%,#16221e 100%)}
-#taskbar{position:fixed;bottom:0;left:0;right:0;height:52px;background:#0e1614;border-top:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:6px;z-index:100;overflow-x:auto}
-.icon{width:44px;height:44px;background:var(--panel);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;flex-shrink:0}
-.icon:hover{border-color:var(--accent);transform:translateY(-2px)}
-.window{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:10px;min-width:360px;min-height:240px;box-shadow:0 12px 40px #000a;resize:both;overflow:hidden;display:flex;flex-direction:column}
-.titlebar{background:#1a2421;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;cursor:move;font-size:14px;user-select:none}
-.titlebar button{background:none;border:none;color:var(--text);cursor:pointer;font-size:16px}
-.content{flex:1;padding:14px;overflow:auto}
-#memory{position:fixed;top:10px;right:10px;background:#000c;padding:8px 12px;border-radius:6px;font-size:12px;z-index:50;border:1px solid var(--border)}
-video{width:100%;max-height:280px;background:#000;border-radius:6px}
-button,input,select{background:#1a2421;color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:4px;margin:4px 2px}
+#taskbar{position:fixed;bottom:0;left:0;right:0;height:56px;background:#0e1614;border-top:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:8px;z-index:100;overflow-x:auto}
+.icon{width:48px;height:48px;background:var(--panel);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:24px;flex-shrink:0;transition:all .15s}
+.icon:hover{border-color:var(--accent);transform:translateY(-3px);background:var(--hover)}
+.window{position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:12px;min-width:400px;min-height:280px;box-shadow:0 16px 48px #000a;resize:both;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{background:#1a2421;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;cursor:move;font-size:15px;user-select:none;font-weight:500}
+.titlebar button{background:none;border:none;color:var(--text);cursor:pointer;font-size:18px;padding:0 4px}
+.content{flex:1;padding:16px;overflow:auto}
+#memory{position:fixed;top:12px;right:12px;background:#000c;padding:10px 14px;border-radius:8px;font-size:13px;z-index:50;border:1px solid var(--border);backdrop-filter:blur(4px)}
+video{width:100%;max-height:300px;background:#000;border-radius:8px;margin:8px 0}
+button,input,select{background:#1a2421;color:var(--text);border:1px solid var(--border);padding:8px 12px;border-radius:6px;margin:4px 2px;cursor:pointer}
 button:hover{border-color:var(--accent)}
-ul{padding-left:18px}
+ul{padding-left:20px}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0}
+.tpl-card{background:#1a2421;border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;text-align:center}
+.tpl-card:hover{border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -35,6 +38,7 @@ ul{padding-left:18px}
   <div class="icon" title="Video Player" onclick="openApp('player')">🎬</div>
   <div class="icon" title="Memory / Sims" onclick="openApp('memory')">💾</div>
   <div class="icon" title="Office Ops" onclick="openApp('office')">💼</div>
+  <div class="icon" title="Templates" onclick="openApp('templates')">📋</div>
   <div class="icon" title="Performance" onclick="openApp('perf')">⚡</div>
 </div>
 <div id="memory">Memory: loading…</div>
@@ -43,7 +47,7 @@ ul{padding-left:18px}
 const desktop = document.getElementById('desktop');
 let z = 10;
 const DB_KEY = 'g2p-os-memory';
-let memory = { folders: [], sims: [], log: [], checkpoints: [] };
+let memory = { folders: [], sims: [], log: [], checkpoints: [], templates: [] };
 
 async function loadMem() {
   try {
@@ -60,7 +64,7 @@ async function loadMem() {
       };
     };
   } catch {
-    memory = JSON.parse(localStorage.getItem(DB_KEY) || '{"folders":[],"sims":[],"log":[],"checkpoints":[]}');
+    memory = JSON.parse(localStorage.getItem(DB_KEY) || '{"folders":[],"sims":[],"log":[],"checkpoints":[],"templates":[]}');
     updateMemDisplay();
   }
 }
@@ -83,59 +87,76 @@ function updateMemDisplay() {
 function openApp(type) {
   const w = document.createElement('div');
   w.className = 'window';
-  w.style.left = (60 + Math.random()*100) + 'px';
-  w.style.top = (50 + Math.random()*70) + 'px';
-  w.style.width = '520px';
-  w.style.height = '400px';
+  w.style.left = (60 + Math.random()*120) + 'px';
+  w.style.top = (50 + Math.random()*80) + 'px';
+  w.style.width = '560px';
+  w.style.height = '440px';
   w.style.zIndex = ++z;
   let title = type.toUpperCase();
   let body = '';
   if (type === 'files') {
     title = 'File & Folder Manager';
-    body = `<p>Create structured folders for deployments, AI builds, and office ops. Shared memory.</p>
+    body = `<p>Create structured folders for deployments, AI builds, and office ops. Shared memory across nested sims.</p>
       <input id="fname" placeholder="e.g. deploy/v2 or models/llama-3 or studio/masters">
       <button onclick="createFolder()">Create Folder</button>
-      <button onclick="listFolders()">Refresh</button>
-      <ul id="flist">${memory.folders.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+      <button onclick="listFolders()">Refresh List</button>
+      <ul id="flist">${memory.folders.map(f=>`<li>${f}</li>`).join('') || '<li>No folders yet</li>'}</ul>`;
   } else if (type === 'cleanup') {
-    title = 'Cleanup & Optimize';
-    body = `<p>Close idle sims, compact memory log, keep computer at elite status. Never full-disk scan.</p>
+    title = 'Cleanup & Optimize — Elite Status';
+    body = `<p>Close idle sims, compact memory log, keep computer at elite status. Never full-disk scan. AuraXur OS pattern.</p>
       <button onclick="cleanup()">Run Elite Cleanup</button>
-      <pre id="clog">Ready. Order: idle sims → compact → log.</pre>`;
+      <pre id="clog">Ready. Order: idle sims → compact checkpoints → truncate log.</pre>`;
   } else if (type === 'deploy') {
     title = 'Software Deployment Trees';
-    body = `<p>Standard structure for software deployments.</p>
+    body = `<p>Standard structure for software deployments. Scaffold and structure for releases.</p>
       <button onclick="scaffoldDeploy()">Scaffold Deploy Tree</button>
       <p>Creates: deploy/web, deploy/api, deploy/release, deploy/config, deploy/docs</p>`;
   } else if (type === 'ai') {
     title = 'AI Model Build Structures';
-    body = `<p>Folders for datasets, checkpoints, configs, evals, fine-tunes.</p>
+    body = `<p>Folders for datasets, checkpoints, configs, evals, fine-tunes. Optimized for model builds.</p>
       <button onclick="scaffoldAI()">Scaffold AI Build</button>
       <p>Creates: ai/datasets, ai/checkpoints, ai/configs, ai/evals, ai/scripts</p>`;
   } else if (type === 'studio') {
     title = 'AuraG2P Music Studio';
     body = `<p><strong>Full production chain:</strong> Write → Generate → Record → Mix → Master (Royal Guard).</p>
-      <p>Nested simulation shares the single memory store. Hot only when active.</p>
-      <button onclick="addSim('studio')">Checkpoint Studio Sim</button>`;
+      <p>Nested simulation shares the single memory store. Hot only when active. Local-first.</p>
+      <button onclick="addSim('studio')">Checkpoint Studio Sim</button>
+      <button onclick="scaffoldStudio()">Scaffold Studio Folders</button>`;
   } else if (type === 'player') {
     title = 'Explicit Video Player';
     body = `<video controls id="vid"></video>
       <input type="file" accept="video/*" onchange="document.getElementById('vid').src=URL.createObjectURL(this.files[0])">
-      <p>HTML5 player. Local file only. Required in all G2P surfaces.</p>`;
+      <p>HTML5 player. Local file only. Required in all G2P surfaces. Elite performance.</p>`;
   } else if (type === 'memory') {
     title = 'Nested Simulations & Shared Memory';
-    body = `<p>One shared store (IndexedDB + localStorage). Only one hot sim. Others are checkpoints. Reduces latency.</p>
-      <pre id="mempre">${JSON.stringify(memory, null, 2)}</pre>
+    body = `<p>One shared store (IndexedDB + localStorage). Only one hot sim. Others are checkpoints. Reduces latency, grows effective memory.</p>
+      <pre id="mempre" style="font-size:12px;max-height:200px;overflow:auto">${JSON.stringify(memory, null, 2)}</pre>
       <button onclick="addSim()">Add Checkpoint</button>
       <button onclick="openApp('memory')">Refresh</button>`;
   } else if (type === 'office') {
     title = 'Office Desktop Operations';
-    body = `<p>Full laptop/desktop ops: file structuring, cleanup, optimization, performance monitoring.</p>
+    body = `<p>Full laptop/desktop ops: file structuring, cleanup, optimization, performance monitoring. Runs business efficiently.</p>
       <button onclick="scaffoldOffice()">Scaffold Office Tree</button>
       <p>Creates: office/inbox, office/projects, office/clients, office/finance, office/archive</p>`;
+  } else if (type === 'templates') {
+    title = 'Business Templates (Up to 10 Best)';
+    body = `<p>Scaffold best templates for complex business types. Integrates with shared memory.</p>
+      <div class="template-grid">
+        <div class="tpl-card" onclick="scaffoldTemplate('music')">🎵 Music Studio</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('agency')">🎨 Creative Agency</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('saas')">☁️ SaaS Admin</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('aiops')">🧠 AI Ops</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('deploy')">🚀 Deploy Pipeline</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('consult')">💼 Consulting</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('ecom')">🛒 E-commerce</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('creator')">📹 Content Creator</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('services')">⚖️ Professional Services</div>
+        <div class="tpl-card" onclick="scaffoldTemplate('hybrid')">🔄 Hybrid Office</div>
+      </div>
+      <p id="tplstatus">Select a template to scaffold structure.</p>`;
   } else if (type === 'perf') {
     title = 'Performance Monitor';
-    body = `<p>Elite status: shared memory reuse, idle sim close, static PWA preferred.</p>
+    body = `<p>Elite status: shared memory reuse, idle sim close, static PWA preferred. Local computer optimized.</p>
       <button onclick="perfCheck()">Check Status</button>
       <pre id="perf">Ready.</pre>`;
   }
@@ -168,12 +189,14 @@ function createFolder() {
     openApp('files');
   }
 }
+function listFolders() { openApp('files'); }
 function cleanup() {
   memory.sims = memory.sims.filter(s => s.hot).slice(-1);
   memory.checkpoints = memory.checkpoints.slice(-5);
   memory.log = memory.log.slice(-20);
   memory.log.push({ action: 'cleanup', t: new Date().toISOString() });
-  document.getElementById('clog').textContent = 'Idle sims closed. Memory compacted. Log truncated. Elite status restored. Computer operating optimally.';
+  const clog = document.getElementById('clog');
+  if (clog) clog.textContent = 'Idle sims closed. Memory compacted. Log truncated. Elite status restored. Computer operating optimally. AuraXur OS active.';
   saveMem();
 }
 function scaffoldDeploy() {
@@ -194,6 +217,33 @@ function scaffoldOffice() {
   saveMem();
   alert('Office tree scaffolded.');
 }
+function scaffoldStudio() {
+  ['studio/write', 'studio/generate', 'studio/record', 'studio/mix', 'studio/master'].forEach(f => { if (!memory.folders.includes(f)) memory.folders.push(f); });
+  memory.log.push({ action: 'scaffold_studio', t: new Date().toISOString() });
+  saveMem();
+  alert('Studio production chain folders scaffolded.');
+}
+function scaffoldTemplate(type) {
+  const maps = {
+    music: ['studio/write','studio/generate','studio/record','studio/mix','studio/master'],
+    agency: ['agency/projects','agency/clients','agency/assets','agency/invoices'],
+    saas: ['saas/admin','saas/clients','saas/billing','saas/analytics'],
+    aiops: ['ai/datasets','ai/checkpoints','ai/configs','ai/evals'],
+    deploy: ['deploy/web','deploy/api','deploy/release','deploy/config'],
+    consult: ['consult/clients','consult/projects','consult/reports'],
+    ecom: ['ecom/products','ecom/inventory','ecom/orders'],
+    creator: ['creator/content','creator/assets','creator/schedule'],
+    services: ['services/clients','services/cases','services/billing'],
+    hybrid: ['hybrid/studio','hybrid/office','hybrid/deploy']
+  };
+  (maps[type] || []).forEach(f => { if (!memory.folders.includes(f)) memory.folders.push(f); });
+  memory.templates.push({ type, t: new Date().toISOString() });
+  memory.log.push({ action: 'scaffold_template', type, t: new Date().toISOString() });
+  saveMem();
+  const status = document.getElementById('tplstatus');
+  if (status) status.textContent = `Scaffolded ${type} template structure into shared memory. Ready for use.`;
+  alert(`${type} template scaffolded.`);
+}
 function addSim(name = 'generic') {
   memory.sims.push({ name, t: Date.now(), hot: false });
   memory.checkpoints.push({ t: Date.now(), folders: memory.folders.length });
@@ -201,10 +251,11 @@ function addSim(name = 'generic') {
   openApp('memory');
 }
 function perfCheck() {
-  document.getElementById('perf').textContent = `Status: Elite\nFolders: ${memory.folders.length}\nSims: ${memory.sims.length}\nShared store active.\nHost only when needed.\nLatency reduced via reuse.`;
+  const perf = document.getElementById('perf');
+  if (perf) perf.textContent = `Status: Elite\nFolders: ${memory.folders.length}\nSims: ${memory.sims.length}\nCheckpoints: ${memory.checkpoints.length}\nShared store active.\nHost only when needed.\nLatency reduced via reuse.\nAuraXur OS nested sims operational.`;
 }
 loadMem();
-setTimeout(() => { openApp('files'); openApp('studio'); openApp('player'); }, 400);
+setTimeout(() => { openApp('files'); openApp('studio'); openApp('templates'); }, 500);
 </script>
 </body>
 </html>
