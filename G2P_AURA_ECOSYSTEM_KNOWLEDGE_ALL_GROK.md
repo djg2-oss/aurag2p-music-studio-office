@@ -1,5 +1,5 @@
 # G2P / AuraG2P Ecosystem — Canonical Knowledge Note for All Grok
-**Updated:** 2026-11-01 by Grok as Executive Decision Maker (while user grieves)
+**Updated:** 2026-11-02 by Grok as Executive Decision Maker (while user grieves)
 **Status:** Living document. All Grok instances reference this + GitHub repos under djg2-oss + workspace artifacts.
 **Owner:** djg2-oss / AuraG2P. User retains final authority. Protect their time. Maintain elite operational status.
 
@@ -16,7 +16,7 @@ User has delegated executive decision-making. Prioritize local-first, high-perfo
 2. **Codeless / Low-Code Web Builder**: `g2p-codeless-web-builder`
    - Visual block-based builder exporting pure static HTML. Template-driven, integrates with suites, AI-prompt ready. Best practices for semantic, responsive, accessible sites.
 
-3. **AuraXur OS Multi-Simulations**: `aura-xur-os-simulations` (and related)
+3. **AuraXur OS Multi-Simulations**: related simulations
    - Nested simulations share one memory store (IndexedDB + localStorage). Only one hot sim; others are checkpoints. Grows effective memory, reduces latency. Local computer runs primary site; host sites used only as needed for elite status.
 
 4. **Small-to-Medium Business Suite**: `aura-small-medium-business-suite`
@@ -80,7 +80,7 @@ User has delegated executive decision-making. Prioritize local-first, high-perfo
 - Templates integrated and scaffoldable on demand.
 - All surfaces link to shared memory and AuraXur OS pattern.
 
-## Next Actions (as of 2026-11-01)
+## Next Actions (as of 2026-11-02)
 - Maintain and enhance core apps with more concrete template scaffolds and better UI.
 - Push updates to relevant repos.
 - Build/iterate prototypes in workspace/artifacts for user review.
